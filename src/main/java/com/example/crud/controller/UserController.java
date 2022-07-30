@@ -1,5 +1,6 @@
 package com.example.crud.controller;
 
+import com.example.crud.UserNotFoundException;
 import com.example.crud.entity.User;
 import com.example.crud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,30 +31,55 @@ public class UserController
          {
 
               model.addAttribute("user",new User());
-             return "user_form";
+             model.addAttribute("pageTitle","Add new user");
+              return "user_form";
          }
 
          @PostMapping("/users/save")
                   public String saveUser(User user, RedirectAttributes r)
                   {
                       r.addFlashAttribute("message","the user has been saved succesfully");
+
                          service.save(user);
                       return "redirect:/users";
 
                   }
          @GetMapping("users/edit/{id}")
-                 public  String Update(@PathVariable("id") Integer id, Model model, RedirectAttributes r)
+                 public  String Update(@PathVariable("id") Integer id, Model model, RedirectAttributes r) throws UserNotFoundException
          {
             try
             {
                 User user=service.get(id);
              model.addAttribute("user",user);
              model.addAttribute("pageTitle","Edit User ( ID:"+id+")");
+
               return "user_form";
               }
             catch(UserNotFoundException e)
+            {
+                 r.addFlashAttribute("message",e.getMessage());
+            return "redirect:/users";
+            }
 
          }
+       @GetMapping("/users/delete/{id}")
+       public String delete(@PathVariable ("id") Integer id,RedirectAttributes r)
+       {
+           try {
+               service.delete(id);
+               r.addFlashAttribute("message","The user ID "+id+" has been deleted.");
+
+           }
+                     catch(UserNotFoundException e)
+           {
+               r.addFlashAttribute("message",e.getMessage());
+
+           }
+
+           return "redirect:/users";
+
+
+       }
 
 
               }
