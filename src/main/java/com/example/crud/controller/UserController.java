@@ -67,6 +67,7 @@ public class UserController
        {
            try {
                service.delete(id);
+
                r.addFlashAttribute("message","The user ID "+id+" has been deleted.");
 
            }

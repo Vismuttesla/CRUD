@@ -30,13 +30,13 @@
            <tbody>
            <th:block th:each="user :${listUsers}">
                <tr>
-                   <td> [[${user.id}]]</td>
-                   <td> [[${user.email}]]</td>
-                   <td> [[${user.firstName}]]</td>
-                   <td> [[${user.lastName}]]</td>
+                   <td> [[${user.id}]]        </td>
+                   <td> [[${user.email}]]     </td>
+                   <td> [[${user.firstName}]] </td>
+                   <td> [[${user.lastName}]]  </td>
                    <td>
-                       <a class="h4 mr-3" th:href= "@{'/users/edit/'+ ${user.id}}">EDIT</a>
-                       <a class="h4" th:href="@{'/users/delete/'+ ${user.id}}">DELETE</a>
+                       <a class="h4 mr-3" th:href= "@{'/users/edit/'+ ${user.id}}" > EDIT </a>
+                       <a class="h4" th:href="@{'/users/delete/'+ ${user.id}}"> DELETE </a>
                    </td>
                </tr>
 
